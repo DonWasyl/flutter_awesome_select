@@ -842,7 +842,7 @@ class SmartSelect<T> extends StatefulWidget {
 
   @override
   S2State<T?> createState() {
-    return isMultiChoice ? S2MultiState<T?>() : S2SingleState<T>();
+    return isMultiChoice ? S2MultiState<T>() : S2SingleState<T>();
   }
 }
 
@@ -1696,14 +1696,14 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
 }
 
 /// State for Single Choice
-class S2SingleState<T> extends S2State<T?> {
+class S2SingleState<T> extends S2State<T> {
   /// State of the selected choice(s)
   @override
-  S2SingleSelected<T?>? selected;
+  S2SingleSelected<T>? selected;
 
   /// State of choice(s) selection in the modal
   @override
-  S2SingleSelection<T?>? selection;
+  S2SingleSelection<T>? selection;
 
   @override
   void onChange() {
@@ -1714,7 +1714,7 @@ class S2SingleState<T> extends S2State<T?> {
   }
 
   @override
-  void onSelect(S2Choice<T?> choice) {
+  void onSelect(S2Choice<T> choice) {
     widget.singleOnSelect?.call(this, choice);
   }
 
@@ -1740,17 +1740,17 @@ class S2SingleState<T> extends S2State<T?> {
   }
 
   @override
-  S2SingleBuilder<T?>? get builder {
+  S2SingleBuilder<T>? get builder {
     return widget.singleBuilder;
   }
 
   @override
-  S2Validation<S2SingleChosen<T?>>? get validation {
+  S2Validation<S2SingleChosen<T>>? get validation {
     return widget.singleValidation;
   }
 
   @override
-  S2Validation<S2SingleChosen<T?>>? get modalValidation {
+  S2Validation<S2SingleChosen<T>>? get modalValidation {
     return widget.singleModalValidation ?? validation;
   }
 
@@ -1762,7 +1762,7 @@ class S2SingleState<T> extends S2State<T?> {
         ..addListener(_selectedHandler)
         ..resolve(defaultResolver: (T? value) async {
           return widget.choiceItems?.firstWhereOrNull(
-            (S2Choice<T?> item) => item.value == value,
+            (S2Choice<T> item) => item.value == value,
           );
         });
     }
@@ -1771,7 +1771,7 @@ class S2SingleState<T> extends S2State<T?> {
   @override
   void resolveSelection() async {
     // set the initial selection
-    selection = S2SingleSelection<T?>(
+    selection = S2SingleSelection<T>(
       initial: selected!.choice,
       validation: modalValidation,
     )
@@ -1780,7 +1780,7 @@ class S2SingleState<T> extends S2State<T?> {
   }
 
   @override
-  void didUpdateWidget(SmartSelect<T?> oldWidget) {
+  void didUpdateWidget(SmartSelect<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     // reset the initial value
@@ -1857,23 +1857,23 @@ class S2SingleState<T> extends S2State<T?> {
   }
 
   @override
-  Widget? _customGroup(S2Group<T?> group) {
+  Widget? _customGroup(S2Group<T> group) {
     return builder!.group?.call(modalContext, this, group);
   }
 
   @override
-  Widget? _customGroupHeader(S2Group<T?> group) {
+  Widget? _customGroupHeader(S2Group<T> group) {
     return builder!.groupHeader?.call(modalContext, this, group);
   }
 
   @override
-  Widget? choiceBuilder(S2Choice<T?> choice) {
+  Widget? choiceBuilder(S2Choice<T> choice) {
     return builder!.choice?.call(modalContext, this, choice) ??
         choiceResolver.choiceBuilder?.call(modalContext, choice);
   }
 
   @override
-  Widget? choiceTitle(S2Choice<T?> choice) {
+  Widget? choiceTitle(S2Choice<T> choice) {
     return choice.title != null
         ? builder?.choiceTitle?.call(modalContext, this, choice) ??
             defaultChoiceTitle(choice)
@@ -1881,7 +1881,7 @@ class S2SingleState<T> extends S2State<T?> {
   }
 
   @override
-  Widget? choiceSubtitle(S2Choice<T?> choice) {
+  Widget? choiceSubtitle(S2Choice<T> choice) {
     return choice.subtitle != null
         ? builder?.choiceSubtitle?.call(modalContext, this, choice) ??
             defaultChoiceSubtitle(choice)
@@ -1889,7 +1889,7 @@ class S2SingleState<T> extends S2State<T?> {
   }
 
   @override
-  Widget? choiceSecondary(S2Choice<T?> choice) {
+  Widget? choiceSecondary(S2Choice<T> choice) {
     return builder?.choiceSecondary?.call(modalContext, this, choice);
   }
 
@@ -1897,7 +1897,7 @@ class S2SingleState<T> extends S2State<T?> {
   Widget? get choiceSelectorAll => null;
 
   @override
-  Widget? choiceSelector(List<S2Choice<T?>>? values) => null;
+  Widget? choiceSelector(List<S2Choice<T>>? values) => null;
 }
 
 /// State for Multiple Choice

@@ -179,13 +179,13 @@ mixin S2MultiChosenData<T> on S2ChosenData<T> {
 
 class S2SingleChosen<T> extends S2ChosenData<T> with S2SingleChosenData<T> {
   /// Default constructor
-  S2SingleChosen(S2Choice<T>? choice) : _choice = choice;
+  S2SingleChosen(S2Choice<T?>? choice) : _choice = choice;
 
   /// The choice item
-  final S2Choice<T>? _choice;
+  final S2Choice<T?>? _choice;
 
   @override
-  S2Choice<T>? get choice {
+  S2Choice<T?>? get choice {
     return _choice;
   }
 }
@@ -479,7 +479,7 @@ abstract class S2Selection<T> extends S2ChosenNotifier<T> {
 class S2SingleSelection<T> extends S2Selection<T> with S2SingleChosenData<T> {
   /// The initial selection
   @override
-  final S2Choice<T>? initial;
+  final S2Choice<T?>? initial;
 
   /// A function used to validate the selection
   @override
@@ -492,10 +492,10 @@ class S2SingleSelection<T> extends S2Selection<T> with S2SingleChosenData<T> {
   }) : _choice = initial;
 
   /// The choice of the current selection
-  S2Choice<T>? _choice;
+  S2Choice<T?>? _choice;
 
   @override
-  S2Choice<T>? get choice => _choice;
+  S2Choice<T?>? get choice => _choice;
 
   @override
   void validate() {
@@ -504,7 +504,7 @@ class S2SingleSelection<T> extends S2Selection<T> with S2SingleChosenData<T> {
   }
 
   @override
-  set choice(S2Choice<T>? val) {
+  set choice(S2Choice<T?>? val) {
     _choice = val;
     validate();
   }
