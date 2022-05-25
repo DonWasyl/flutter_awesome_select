@@ -79,15 +79,17 @@ class _FeaturesModalConfirmState extends State<FeaturesModalConfirm> {
               child: Row(
                 children: <Widget>[
                   const Spacer(),
-                  FlatButton(
+                  TextButton(
                     child: const Text('Cancel'),
                     onPressed: () => state.closeModal(confirmed: false),
                   ),
                   const SizedBox(width: 5),
-                  FlatButton(
+                  TextButton(
                     child: Text('OK (${state.selection?.length ?? 0})'),
-                    color: Theme.of(context).primaryColor,
-                    textColor: Colors.white,
+                    style: TextButton.styleFrom(
+                      primary: Colors.white,
+                      onSurface: Theme.of(context).primaryColor,
+                    ),
                     onPressed: (state.selection?.isValid ?? true)
                         ? () => state.closeModal(confirmed: true)
                         : null,
@@ -130,10 +132,12 @@ class _FeaturesModalConfirmState extends State<FeaturesModalConfirm> {
             return Center(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                child: FlatButton(
+                child: TextButton(
                   child: const Text('Send'),
-                  color: Colors.redAccent,
-                  textColor: Colors.white,
+                  style: TextButton.styleFrom(
+                    primary: Colors.white,
+                    onSurface: Colors.redAccent,
+                  ),
                   onPressed: () => state.closeModal(confirmed: true),
                 ),
               ),
