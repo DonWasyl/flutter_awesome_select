@@ -34,11 +34,11 @@ class _FeaturesOptionAsyncState extends State<FeaturesOptionAsync> {
           choiceGrouped: true,
           choiceStyle: S2ChoiceStyle(
             showCheckmark: true,
-            highlightColor: Theme.of(context).primaryColor.withOpacity(.4),
+            highlightColor: Theme.of(context).primaryColor.withValues(alpha: .4),
           ),
           choiceActiveStyle: S2ChoiceStyle(
             raised: true,
-            highlightColor: Theme.of(context).accentColor.withOpacity(.4),
+            highlightColor: Theme.of(context).colorScheme.secondary.withValues(alpha: .4),
           ),
           choiceSecondaryBuilder: (context, state, choice) => CircleAvatar(
             backgroundImage: NetworkImage(choice.meta['picture']['thumbnail']),

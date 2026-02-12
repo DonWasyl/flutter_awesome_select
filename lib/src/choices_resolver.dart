@@ -59,6 +59,7 @@ class S2ChoiceResolver<T> {
         activeColor: choice.activeStyle!.color,
         controlAffinity: ListTileControlAffinity
             .values[choice.effectiveStyle!.control?.index ?? 2],
+        toggleable: false,
         onChanged:
             choice.disabled != true ? (val) => choice.select!(true) : null,
         groupValue: choice.selected == true ? choice.value : null,
@@ -75,11 +76,11 @@ class S2ChoiceResolver<T> {
         title: titleBuilder(choice),
         subtitle: subtitleBuilder(choice),
         secondary: secondaryBuilder(choice),
-        activeColor:
+        activeThumbColor:
             choice.activeStyle!.accentColor ?? choice.activeStyle!.color,
-        activeTrackColor: choice.activeStyle!.color?.withAlpha(0x80),
+        activeTrackColor: choice.activeStyle!.color?.withValues(alpha: 0x80 / 255.0),
         inactiveThumbColor: choice.style!.accentColor,
-        inactiveTrackColor: choice.style!.color?.withAlpha(0x80),
+        inactiveTrackColor: choice.style!.color?.withValues(alpha: 0x80 / 255.0),
         contentPadding: choice.effectiveStyle!.padding,
         controlAffinity: ListTileControlAffinity
             .values[choice.effectiveStyle!.control?.index ?? 2],

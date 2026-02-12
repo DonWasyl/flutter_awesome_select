@@ -62,26 +62,26 @@ class S2ChipTheme extends StatelessWidget {
         (!isDark
             ? Theme.of(context).unselectedWidgetColor
             : ChipTheme.of(context).backgroundColor ??
-                Theme.of(context).backgroundColor);
+                Theme.of(context).colorScheme.surface);
     final Color backgroundColor = raised == true
         ? primaryColor
         : outlined == true
             ? Colors.transparent
-            : primaryColor.withOpacity(opacity ?? backgroundAlpha);
-    final Color disabledColor = primaryColor.withAlpha(disabledAlpha);
+            : primaryColor.withValues(alpha: opacity ?? backgroundAlpha);
+    final Color disabledColor = primaryColor.withValues(alpha: disabledAlpha / 255.0);
 
     final Color secondaryColor = color ?? Theme.of(context).primaryColor;
     final Color selectedColor = raised == true
         ? secondaryColor
         : outlined == true
             ? Colors.transparent
-            : secondaryColor.withOpacity(opacity ?? backgroundAlpha);
+            : secondaryColor.withValues(alpha: opacity ?? backgroundAlpha);
 
     final Color foregroundColor = raised == true
         ? Colors.white
         : selected == true
-            ? secondaryColor.withAlpha(foregroundAlpha)
-            : primaryColor.withAlpha(foregroundAlpha);
+            ? secondaryColor.withValues(alpha: foregroundAlpha / 255.0)
+            : primaryColor.withValues(alpha: foregroundAlpha / 255.0);
 
     final TextStyle defaultLabelStyle =
         ChipTheme.of(context).labelStyle ?? TextStyle();
@@ -92,7 +92,7 @@ class S2ChipTheme extends StatelessWidget {
         .copyWith(
             color: raised == true
                 ? Colors.white
-                : secondaryColor.withAlpha(foregroundAlpha));
+                : secondaryColor.withValues(alpha: foregroundAlpha / 255.0));
 
     final ShapeBorder? chipShapeRaised =
         raised == true ? StadiumBorder() : null;
@@ -100,8 +100,8 @@ class S2ChipTheme extends StatelessWidget {
         ? StadiumBorder(
             side: BorderSide(
               color: selected == true
-                  ? secondaryColor.withOpacity(opacity ?? borderAlpha)
-                  : primaryColor.withOpacity(opacity ?? borderAlpha),
+                  ? secondaryColor.withValues(alpha: opacity ?? borderAlpha)
+                  : primaryColor.withValues(alpha: opacity ?? borderAlpha),
             ),
           )
         : null;

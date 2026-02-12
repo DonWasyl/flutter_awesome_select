@@ -135,8 +135,8 @@ class _FeaturesModalWidgetState extends State<FeaturesModalWidget> {
                 child: TextButton(
                   child: Text('Submit (${state.selection?.length})'),
                   style: TextButton.styleFrom(
-                    primary: Colors.white,
-                    onSurface: Theme.of(context).primaryColor,
+                    foregroundColor: Colors.white,
+                    disabledForegroundColor: Theme.of(context).primaryColor,
                   ),
                   onPressed: (state.selection?.isValid ?? true)
                       ? () => state.closeModal(confirmed: true)

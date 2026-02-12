@@ -87,8 +87,8 @@ class _FeaturesModalConfirmState extends State<FeaturesModalConfirm> {
                   TextButton(
                     child: Text('OK (${state.selection?.length ?? 0})'),
                     style: TextButton.styleFrom(
-                      primary: Colors.white,
-                      onSurface: Theme.of(context).primaryColor,
+                      foregroundColor: Colors.white,
+                      disabledForegroundColor: Theme.of(context).primaryColor,
                     ),
                     onPressed: (state.selection?.isValid ?? true)
                         ? () => state.closeModal(confirmed: true)
@@ -135,8 +135,8 @@ class _FeaturesModalConfirmState extends State<FeaturesModalConfirm> {
                 child: TextButton(
                   child: const Text('Send'),
                   style: TextButton.styleFrom(
-                    primary: Colors.white,
-                    onSurface: Colors.redAccent,
+                    foregroundColor: Colors.white,
+                    disabledForegroundColor: Colors.redAccent,
                   ),
                   onPressed: () => state.closeModal(confirmed: true),
                 ),

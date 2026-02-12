@@ -47,7 +47,7 @@ class _FeaturesModalValidationState extends State<FeaturesModalValidation> {
                 color: choice.selected ? Theme.of(context).primaryColor : null,
               ),
               highlight: state.filter?.value,
-              highlightColor: Theme.of(context).primaryColor.withOpacity(.7),
+              highlightColor: Theme.of(context).primaryColor.withValues(alpha: .7),
             );
           },
           tileBuilder: (context, state) {
@@ -126,8 +126,8 @@ class _FeaturesModalValidationState extends State<FeaturesModalValidation> {
                     icon: Icon(Icons.check),
                     label: Text('OK (${state.selection?.length ?? 0})'),
                     style: TextButton.styleFrom(
-                      primary: Colors.white,
-                      onSurface: Theme.of(context).primaryColor,
+                      foregroundColor: Colors.white,
+                      disabledForegroundColor: Theme.of(context).primaryColor,
                     ),
                     onPressed: (state.selection?.isValid ?? true)
                         ? () => state.closeModal(confirmed: true)

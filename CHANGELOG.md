@@ -1,7 +1,24 @@
+## [6.0.0] - 2026-02-12
+
+* Updated to Flutter 3.38+ and Dart 3.10+
+* BREAKING: Updated SDK constraints to `>=3.0.0 <4.0.0`
+* Fixed deprecated TextTheme properties (headline6 -> titleLarge)
+* Fixed deprecated ColorScheme properties (errorColor -> colorScheme.error, backgroundColor -> colorScheme.surface, primaryColorBrightness -> colorScheme.brightness)
+* Fixed deprecated TextButton.styleFrom parameters (primary -> foregroundColor, onSurface -> disabledForegroundColor)
+* Fixed deprecated Switch properties (activeColor -> activeThumbColor)
+* Fixed deprecated AppBar properties (removed brightness parameter)
+* Replaced deprecated WillPopScope with PopScope
+* Replaced deprecated MediaQueryData.fromWindow with MediaQuery.of(context)
+* Replaced deprecated Color.withOpacity with Color.withValues for better precision
+* Fixed S2ChosenData to use abstract mixin class for proper mixin support
+* Cleaned up unnecessary dart:ui and duplicate imports
+* Updated collection dependency to ^1.18.0
+
 ## [5.2.0]
 * Merged PRs #25, #27, #30
 
 ## [5.1.0]
+
 * Null safety issues are fixed.
  
 ## [5.0.5] - 2021-10-23

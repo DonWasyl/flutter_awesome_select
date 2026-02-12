@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/material.dart';
 import 'model/builder.dart';
@@ -938,7 +937,7 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
       titleStyle: const TextStyle(),
       subtitleStyle: const TextStyle(),
       control: S2ChoiceControl.platform,
-      highlightColor: theme.highlightColor.withOpacity(.7),
+      highlightColor: theme.highlightColor.withValues(alpha: .7),
     );
   }
 
@@ -973,18 +972,18 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
         backgroundColor:
             widget.modalConfig.isFullPage != true ? theme.cardColor : null,
         textStyle: widget.modalConfig.isFullPage != true
-            ? theme.textTheme.headline6
-            : theme.primaryTextTheme.headline6,
+            ? theme.textTheme.titleLarge
+            : theme.primaryTextTheme.titleLarge,
         iconTheme:
             widget.modalConfig.isFullPage != true ? theme.iconTheme : null,
         errorStyle: TextStyle(
           fontSize: 13.5,
           fontWeight: FontWeight.w500,
           color: widget.modalConfig.isFullPage == true
-              ? (theme.primaryColorBrightness == Brightness.dark
+              ? (theme.colorScheme.brightness == Brightness.dark
                   ? Colors.white
-                  : theme.errorColor)
-              : theme.errorColor,
+                  : theme.colorScheme.error)
+              : theme.colorScheme.error,
         ),
       ).merge(widget.modalConfig.headerStyle),
     );
@@ -1020,14 +1019,22 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
 
   /// Returns the default modal widget
   Widget get defaultModal {
-    return WillPopScope(
-      onWillPop: onModalWillClose,
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
+        final shouldPop = await onModalWillClose();
+        if (shouldPop == true) {
+          // ignore: use_build_context_synchronously
+          Navigator.of(context).pop();
+        }
+      },
       child: modalConfig.isFullPage == true
           ? Scaffold(
               backgroundColor: modalConfig.style.backgroundColor,
               appBar: PreferredSize(
+                preferredSize: const Size.fromHeight(kToolbarHeight),
                 child: modalHeader!,
-                preferredSize: Size.fromHeight(kToolbarHeight),
               ),
               body: SafeArea(
                 maintainBottomViewPadding: true,
@@ -1188,10 +1195,10 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
               icon: modalConfig.confirmIcon!,
               label: modalConfig.confirmLabel!,
               style: TextButton.styleFrom(
-                primary: modalConfig.confirmIsLight
+                foregroundColor: modalConfig.confirmIsLight
                     ? modalConfig.confirmColor
                     : Colors.white,
-                onSurface:
+                disabledForegroundColor:
                     modalConfig.confirmIsDark ? modalConfig.confirmColor : null,
               ),
               onPressed: onPressed,
@@ -1206,10 +1213,10 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
             child: TextButton(
               child: modalConfig.confirmLabel!,
               style: TextButton.styleFrom(
-                onSurface: modalConfig.confirmIsDark
+                disabledForegroundColor: modalConfig.confirmIsDark
                     ? modalConfig.confirmColor ?? Colors.blueGrey
                     : null,
-                primary: modalConfig.confirmIsLight
+                foregroundColor: modalConfig.confirmIsLight
                     ? modalConfig.confirmColor
                     : Colors.white,
               ),
@@ -1245,10 +1252,8 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
   Widget get defaultModalHeader {
     final bool isFiltering = filter?.activated == true;
     return AppBar(
-      primary: true,
       shape: modalHeaderStyle.shape,
       elevation: modalHeaderStyle.elevation,
-      brightness: modalHeaderStyle.brightness,
       backgroundColor: modalHeaderStyle.backgroundColor,
       actionsIconTheme: modalHeaderStyle.actionsIconTheme,
       iconTheme: modalHeaderStyle.iconTheme,
@@ -1548,9 +1553,8 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
           barrierColor: modalConfig.barrierColor,
           enableDrag: modalConfig.enableDrag,
           isScrollControlled: true,
-          builder: (_) {
-            final MediaQueryData mediaQuery =
-                MediaQueryData.fromWindow(WidgetsBinding.instance.window);
+          builder: (context) {
+            final MediaQueryData mediaQuery = MediaQuery.of(context);
             final double topObstructions = mediaQuery.viewPadding.top;
             final double bottomObstructions = mediaQuery.viewPadding.bottom;
             final double keyboardHeight = mediaQuery.viewInsets.bottom;
