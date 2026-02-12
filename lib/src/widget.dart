@@ -1125,14 +1125,24 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
     return TextField(
       autofocus: true,
       controller: filter!.ctrl,
-      style: TextStyle(color: Colors.black),
+      style: modalHeaderStyle.textStyle,
       cursorColor: modalConfig.isFullPage
           ? Colors.black
           : theme.textSelectionTheme.cursorColor,
       textInputAction: TextInputAction.search,
-      decoration: InputDecoration.collapsed(
+      decoration: InputDecoration(
         hintText: modalConfig.filterHint ?? 'Search on $title',
-        hintStyle: modalHeaderStyle.textStyle,
+        hintStyle: modalHeaderStyle.textStyle?.copyWith(
+          color: modalHeaderStyle.textStyle?.color?.withValues(alpha: 0.5),
+        ),
+        border: InputBorder.none,
+        enabledBorder: InputBorder.none,
+        focusedBorder: InputBorder.none,
+        errorBorder: InputBorder.none,
+        focusedErrorBorder: InputBorder.none,
+        contentPadding: EdgeInsets.zero,
+        filled: false,
+        fillColor: Colors.transparent,
       ),
       textAlign: modalConfig.headerStyle.centerTitle == true
           ? TextAlign.center
@@ -1554,7 +1564,8 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
           enableDrag: modalConfig.enableDrag,
           isScrollControlled: true,
           builder: (context) {
-            final MediaQueryData mediaQuery = MediaQuery.of(context);
+            final MediaQueryData mediaQuery =
+                MediaQueryData.fromView(View.of(context));
             final double topObstructions = mediaQuery.viewPadding.top;
             final double bottomObstructions = mediaQuery.viewPadding.bottom;
             final double keyboardHeight = mediaQuery.viewInsets.bottom;
