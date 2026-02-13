@@ -435,6 +435,8 @@ class SmartSelect<T> extends StatefulWidget {
     bool? modalFilter,
     bool? modalFilterAuto,
     String? modalFilterHint,
+    bool? modalTopObstructions = true,
+    bool? modalBottomObstructions = true,
   }) {
     S2ChoiceConfig defaultChoiceConfig = const S2ChoiceConfig(
       type: S2ChoiceType.radios,
@@ -758,6 +760,8 @@ class SmartSelect<T> extends StatefulWidget {
     bool? modalFilter,
     bool? modalFilterAuto,
     String? modalFilterHint,
+    bool? modalTopObstructions = true,
+    bool? modalBottomObstructions = true,
   }) {
     S2ChoiceConfig defaultChoiceConfig = const S2ChoiceConfig(
       type: S2ChoiceType.checkboxes,
@@ -1031,7 +1035,7 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
       },
       child: modalConfig.isFullPage == true
           ? Scaffold(
-              backgroundColor: modalConfig.style.backgroundColor,
+              backgroundColor: modalStyle.backgroundColor,
               appBar: PreferredSize(
                 preferredSize: const Size.fromHeight(kToolbarHeight),
                 child: modalHeader!,
@@ -1566,8 +1570,11 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
           builder: (context) {
             final MediaQueryData mediaQuery =
                 MediaQueryData.fromView(View.of(context));
-            final double topObstructions = mediaQuery.viewPadding.top;
-            final double bottomObstructions = mediaQuery.viewPadding.bottom;
+            final double topObstructions =
+                modalConfig.topObstructions ? mediaQuery.viewPadding.top : 0;
+            final double bottomObstructions = modalConfig.bottomObstructions
+                ? mediaQuery.viewPadding.bottom
+                : 0;
             final double keyboardHeight = mediaQuery.viewInsets.bottom;
             final double deviceHeight = mediaQuery.size.height;
             final bool isKeyboardOpen = keyboardHeight > 0;
